@@ -1,0 +1,294 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>SlipKnot Top</title>
+    <style>
+      .media-gallery {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 6px;
+      }
+
+      .media-thumb {
+        width: 140px;
+        height: auto;
+        border: 2px solid #ffffff;
+        cursor: pointer;
+      }
+
+      .media-thumb:hover {
+        filter: brightness(1.2);
+      }
+
+      .lightbox-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease-out;
+        z-index: 9999;
+      }
+
+      .lightbox-overlay.is-visible {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .lightbox-inner {
+        position: relative;
+        max-width: 70vw;
+        max-height: 70vh;
+      }
+
+      .lightbox-image {
+        max-width: 80vw;
+        max-height: 60vh;
+        border: 3px solid #ffffff;
+        box-shadow: 0 0 20px #000000;
+      }
+
+      .lightbox-close {
+        position: absolute;
+        top: -28px;
+        right: 0;
+        background: #000000;
+        color: #ffffff;
+        border: 2px solid #ffffff;
+        font-size: 16px;
+        line-height: 16px;
+        padding: 2px 6px;
+        cursor: pointer;
+      }
+
+      .lightbox-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.7);
+        color: #ffffff;
+        border: 2px solid #ffffff;
+        font-size: 18px;
+        line-height: 18px;
+        padding: 6px 10px;
+        cursor: pointer;
+      }
+
+      .lightbox-arrow.prev {
+        left: -48px;
+      }
+
+      .lightbox-arrow.next {
+        right: -48px;
+      }
+
+      @media (max-width: 600px) {
+        .lightbox-arrow.prev {
+          left: 4px;
+        }
+
+        .lightbox-arrow.next {
+          right: 4px;
+        }
+      }
+    </style>
+  </head>
+  <body
+    bgcolor="#000000"
+    background="raw/bg00.jpg"
+    text="#ffffff"
+    link="#ff0000"
+    vlink="#ff0000"
+    alink="#ff0000"
+    topmargin="0"
+    marginwidth="0"
+    marginheight="0"
+  >
+    <div align="center">
+      <table border="0" width="540" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="540" height="30" align="left" colspan="2">
+            <font face="Arial, Helvetica, Geneva, sans-serif" size="4" color="#ffffff">
+              <b>SlipKnot Homepage</b>
+            </font>
+          </td>
+        </tr>
+        <tr>
+          <td width="340" valign="top" id="about">
+            <table border="0" width="340" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="340" height="120" valign="top">
+                  <font face="Arial, Helvetica, Geneva, sans-serif" size="2">
+                    <b>About SlipKnot</b><br><br>
+                    SlipKnot is a work in progress 2D platformer that's heavily
+                    inspired by other 2D platformers. Most notably the
+                    <b>Fancy Pants Adventures</b> series and the
+                    <b>Sonic The Hedgehog</b> series.<br><br>
+                    Hell I mainly used the Sonic physics guide while working on Ty's
+                    player controller in the pre-alpha! (Also I totally didn't HEAVILY reference the SA2 site for this site and even took the bg ehe..)<br><br>
+                    <i>DESCRIPTION WILL BE UPDATED AT A LATER POINT IN DEVELOPMENT.</i>
+                    <br><br>
+                  </font>
+                </td>
+              </tr>
+              <tr id="media">
+                <td width="340" height="80" valign="top">
+                  <font face="Arial, Helvetica, Geneva, sans-serif" size="2">
+                    <b>Media</b>
+                    <div class="media-gallery">
+                      <img
+                        src="raw/screenshots/ss1.png"
+                        width="400"
+                        height="200"
+                        class="media-thumb"
+                        data-index="0"
+                      >
+                      <img
+                        src="raw/screenshots/ss2.png"
+                        width="400"
+                        height="200"
+                        class="media-thumb"
+                        data-index="1"
+                      >
+                      <img
+                        src="raw/screenshots/ss3.png"
+                        width="400"
+                        height="200"
+                        class="media-thumb"
+                        data-index="2"
+                      >
+                      <img
+                        src="raw/screenshots/ss4.png"
+                        width="400"
+                        height="200"
+                        class="media-thumb"
+                        data-index="3"
+                      >
+                    </div>
+                    <br><br>
+                  </font>
+                </td>
+              </tr>
+              <tr id="download">
+                <td width="340" height="60" valign="top">
+                  <font face="Arial, Helvetica, Geneva, sans-serif" size="2">
+                    <b>Download / Play</b><br><br>
+                    No public builds yet! See you soon though!<br>
+                  </font>
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td width="200" align="center" valign="top">
+            <table border="0" width="200" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="200" height="200" align="center">
+                  <img
+                    src="raw/logogo.png"
+                    width="400"
+                    height="200"
+                  >
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Simple lightbox for media gallery -->
+    <div class="lightbox-overlay" id="media-lightbox">
+      <div class="lightbox-inner">
+        <button type="button" class="lightbox-close" id="lightbox-close">
+          X
+        </button>
+        <button
+          type="button"
+          class="lightbox-arrow prev"
+          id="lightbox-prev"
+        >
+          &#9664;
+        </button>
+        <img
+          src=""
+          alt="SlipKnot screenshot"
+          class="lightbox-image"
+          id="lightbox-image"
+        >
+        <button
+          type="button"
+          class="lightbox-arrow next"
+          id="lightbox-next"
+        >
+          &#9654;
+        </button>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        var thumbs = document.getElementsByClassName("media-thumb");
+        if (!thumbs.length) return;
+
+        var overlay = document.getElementById("media-lightbox");
+        var img = document.getElementById("lightbox-image");
+        var btnClose = document.getElementById("lightbox-close");
+        var btnPrev = document.getElementById("lightbox-prev");
+        var btnNext = document.getElementById("lightbox-next");
+
+        var currentIndex = 0;
+        var images = [];
+
+        for (var i = 0; i < thumbs.length; i++) {
+          images.push(thumbs[i].src);
+        }
+
+        function show(index) {
+          if (index < 0) index = images.length - 1;
+          if (index >= images.length) index = 0;
+          currentIndex = index;
+          img.src = images[currentIndex];
+          overlay.className = "lightbox-overlay is-visible";
+        }
+
+        function hide() {
+          overlay.className = "lightbox-overlay";
+        }
+
+        for (var j = 0; j < thumbs.length; j++) {
+          (function (idx) {
+            thumbs[idx].onclick = function () {
+              show(idx);
+            };
+          })(j);
+        }
+
+        btnClose.onclick = hide;
+        btnPrev.onclick = function () {
+          show(currentIndex - 1);
+        };
+        btnNext.onclick = function () {
+          show(currentIndex + 1);
+        };
+
+        overlay.onclick = function (e) {
+          if (e.target === overlay) {
+            hide();
+          }
+        };
+
+        document.addEventListener("keydown", function (e) {
+          if (overlay.className.indexOf("is-visible") === -1) return;
+          if (e.key === "Escape") hide();
+          if (e.key === "ArrowLeft") show(currentIndex - 1);
+          if (e.key === "ArrowRight") show(currentIndex + 1);
+        });
+      })();
+    </script>
+  </body>
+</html>

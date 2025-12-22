@@ -1,0 +1,443 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>SlipKnot - Media</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #008080;
+        font-family: Tahoma, "MS Sans Serif", sans-serif;
+        padding: 0;
+        margin: 0;
+        min-height: 100vh;
+      }
+
+      .nav-bar {
+        background: #ECE9D8;
+        padding: 4px 0;
+        text-align: center;
+        border-top: 1px solid #FFFFFF;
+        border-bottom: 1px solid #808080;
+        box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-links {
+        display: flex;
+        justify-content: center;
+        gap: 2px;
+        flex-wrap: wrap;
+      }
+
+      .nav-link {
+        color: #000000;
+        text-decoration: none;
+        font-size: 11px;
+        font-weight: normal;
+        font-family: Tahoma, "MS Sans Serif", sans-serif;
+        padding: 4px 12px;
+        background: #ECE9D8;
+        border: 1px solid transparent;
+        transition: none;
+      }
+
+      .nav-link:hover {
+        background: #D4D0C8;
+        border: 1px outset #ECE9D8;
+        box-shadow: inset -1px -1px 0 #808080, inset 1px 1px 0 #FFFFFF;
+      }
+
+      .nav-link:active {
+        border: 1px inset #ECE9D8;
+        box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #FFFFFF;
+      }
+
+      .main-content {
+        background: #ECE9D8;
+        background-image: repeating-linear-gradient(
+          45deg,
+          #ECE9D8,
+          #ECE9D8 10px,
+          #E0DDD0 10px,
+          #E0DDD0 20px
+        );
+        padding: 20px;
+        min-height: calc(100vh - 50px);
+        width: 800px;
+        max-width: 90vw;
+        margin: 0 auto;
+        border-left: 2px outset #ECE9D8;
+        border-right: 2px outset #ECE9D8;
+        border-bottom: 2px outset #ECE9D8;
+        box-shadow: 
+          inset -1px -1px 0 #000,
+          inset 1px 1px 0 #FFF;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .section {
+        margin-bottom: 20px;
+        background: #FFFFFF;
+        border: 1px inset #C0C0C0;
+        padding: 12px;
+        box-shadow: 
+          inset -1px -1px 0 #808080,
+          inset 1px 1px 0 #FFFFFF;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .section-title {
+        font-size: 14px;
+        font-weight: bold;
+        font-family: Tahoma, "MS Sans Serif", sans-serif;
+        color: #000000;
+        margin-bottom: 12px;
+        padding-bottom: 4px;
+        border-bottom: 1px solid #808080;
+        text-align: center;
+      }
+
+      .section-content {
+        font-size: 11px;
+        font-family: Tahoma, "MS Sans Serif", sans-serif;
+        line-height: 1.5;
+        color: #000000;
+        text-align: center;
+      }
+
+      .media-gallery {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+        justify-content: center;
+      }
+
+      .media-thumb {
+        width: 180px;
+        max-width: calc(50% - 5px);
+        height: auto;
+        border: 2px outset #C0C0C0;
+        background: #C0C0C0;
+        padding: 2px;
+        cursor: pointer;
+        box-shadow: 
+          inset -1px -1px 0 #808080,
+          inset 1px 1px 0 #FFFFFF;
+        transition: none;
+      }
+
+      .media-thumb:hover {
+        border: 2px outset #D4D0C8;
+        background: #D4D0C8;
+      }
+
+      .media-thumb:active {
+        border: 2px inset #C0C0C0;
+        box-shadow: 
+          inset 1px 1px 0 #808080,
+          inset -1px -1px 0 #FFFFFF;
+      }
+
+      .lightbox-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease-out;
+        z-index: 9999;
+      }
+
+      .lightbox-overlay.is-visible {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .lightbox-window {
+        background: #ECE9D8;
+        border: 2px outset #ECE9D8;
+        box-shadow: 
+          inset -1px -1px 0 #000,
+          inset 1px 1px 0 #FFF,
+          2px 2px 4px rgba(0, 0, 0, 0.3);
+        max-width: 90vw;
+        max-height: 90vh;
+      }
+
+      .lightbox-titlebar {
+        background: linear-gradient(to bottom, #0054E3 0%, #0041C2 50%, #003399 100%);
+        height: 18px;
+        padding: 2px 3px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #000000;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      }
+
+      .lightbox-titlebar-text {
+        color: #FFFFFF;
+        font-size: 11px;
+        font-weight: bold;
+        font-family: Tahoma, "MS Sans Serif", sans-serif;
+        text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+      }
+
+      .lightbox-content {
+        background: #FFFFFF;
+        padding: 8px;
+        border: 1px inset #ECE9D8;
+        position: relative;
+      }
+
+      .lightbox-image {
+        max-width: 80vw;
+        max-height: 70vh;
+        border: 2px inset #C0C0C0;
+        background: #C0C0C0;
+        padding: 2px;
+        display: block;
+        margin: 0 auto;
+        box-shadow: 
+          inset -1px -1px 0 #808080,
+          inset 1px 1px 0 #FFFFFF;
+      }
+
+      .lightbox-close {
+        width: 16px;
+        height: 14px;
+        border: 1px solid #000;
+        background: #C0C0C0;
+        cursor: pointer;
+        font-size: 9px;
+        color: #000;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 
+          inset -1px -1px 0 #808080,
+          inset 1px 1px 0 #FFF;
+        font-family: Tahoma, "MS Sans Serif", sans-serif;
+      }
+
+      .lightbox-close:hover {
+        background: #FF0000;
+        color: #FFF;
+      }
+
+      .lightbox-close:active {
+        box-shadow: 
+          inset 1px 1px 0 #808080,
+          inset -1px -1px 0 #FFF;
+      }
+
+      .lightbox-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #C0C0C0;
+        color: #000;
+        border: 2px outset #C0C0C0;
+        font-size: 18px;
+        line-height: 18px;
+        padding: 6px 10px;
+        cursor: pointer;
+        font-weight: bold;
+        box-shadow: 
+          inset -1px -1px 0 #808080,
+          inset 1px 1px 0 #FFF;
+        z-index: 10;
+        font-family: Tahoma, "MS Sans Serif", sans-serif;
+      }
+
+      .lightbox-arrow:hover {
+        background: #D4D0C8;
+      }
+
+      .lightbox-arrow:active {
+        box-shadow: 
+          inset 1px 1px 0 #808080,
+          inset -1px -1px 0 #FFF;
+      }
+
+      .lightbox-arrow.prev {
+        left: -48px;
+      }
+
+      .lightbox-arrow.next {
+        right: -48px;
+      }
+
+      @media (max-width: 600px) {
+        .lightbox-arrow.prev {
+          left: 4px;
+        }
+
+        .lightbox-arrow.next {
+          right: 4px;
+        }
+      }
+
+      a {
+        color: #0000FF;
+        text-decoration: underline;
+      }
+
+      a:visited {
+        color: #800080;
+      }
+
+      a:hover {
+        color: #FF0000;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="nav-bar">
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">About</a>
+        <a href="media.html" class="nav-link">Media</a>
+        <a href="download.html" class="nav-link">Download</a>
+        <a href="credits.html" class="nav-link">Credits</a>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="section" id="media">
+        <div class="section-title">Media</div>
+        <div class="media-gallery">
+          <img
+            src="raw/screenshots/ss1.png"
+            alt="Screenshot 1"
+            class="media-thumb"
+            data-index="0"
+          >
+          <img
+            src="raw/screenshots/ss2.png"
+            alt="Screenshot 2"
+            class="media-thumb"
+            data-index="1"
+          >
+          <img
+            src="raw/screenshots/ss3.png"
+            alt="Screenshot 3"
+            class="media-thumb"
+            data-index="2"
+          >
+          <img
+            src="raw/screenshots/ss4.png"
+            alt="Screenshot 4"
+            class="media-thumb"
+            data-index="3"
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="lightbox-overlay" id="media-lightbox">
+      <div class="lightbox-window">
+        <div class="lightbox-titlebar">
+          <div class="lightbox-titlebar-text">Image Viewer</div>
+          <div class="lightbox-close" id="lightbox-close">×</div>
+        </div>
+        <div class="lightbox-content">
+          <button
+            type="button"
+            class="lightbox-arrow prev"
+            id="lightbox-prev"
+          >
+            ‹
+          </button>
+          <img
+            src=""
+            alt="SlipKnot screenshot"
+            class="lightbox-image"
+            id="lightbox-image"
+          >
+          <button
+            type="button"
+            class="lightbox-arrow next"
+            id="lightbox-next"
+          >
+            ›
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        var thumbs = document.getElementsByClassName("media-thumb");
+        if (!thumbs.length) return;
+
+        var overlay = document.getElementById("media-lightbox");
+        var img = document.getElementById("lightbox-image");
+        var btnLightboxClose = document.getElementById("lightbox-close");
+        var btnPrev = document.getElementById("lightbox-prev");
+        var btnNext = document.getElementById("lightbox-next");
+
+        var currentIndex = 0;
+        var images = [];
+
+        for (var i = 0; i < thumbs.length; i++) {
+          images.push(thumbs[i].src);
+        }
+
+        function show(index) {
+          if (index < 0) index = images.length - 1;
+          if (index >= images.length) index = 0;
+          currentIndex = index;
+          img.src = images[currentIndex];
+          overlay.className = "lightbox-overlay is-visible";
+        }
+
+        function hide() {
+          overlay.className = "lightbox-overlay";
+        }
+
+        for (var j = 0; j < thumbs.length; j++) {
+          (function (idx) {
+            thumbs[idx].onclick = function () {
+              show(idx);
+            };
+          })(j);
+        }
+
+        btnLightboxClose.onclick = hide;
+        btnPrev.onclick = function () {
+          show(currentIndex - 1);
+        };
+        btnNext.onclick = function () {
+          show(currentIndex + 1);
+        };
+
+        overlay.onclick = function (e) {
+          if (e.target === overlay) {
+            hide();
+          }
+        };
+
+        document.addEventListener("keydown", function (e) {
+          if (overlay.className.indexOf("is-visible") === -1) return;
+          if (e.key === "Escape") hide();
+          if (e.key === "ArrowLeft") show(currentIndex - 1);
+          if (e.key === "ArrowRight") show(currentIndex + 1);
+        });
+      })();
+    </script>
+  </body>
+</html>
